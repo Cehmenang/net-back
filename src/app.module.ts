@@ -20,14 +20,16 @@ import { SearchModule } from './search/search.module';
         isGlobal: true,
         useFactory: async () => ({
           store: await redisStore({
-            socket: {
+          socket: {
               host: process.env.REDIS_HOST || 'localhost',
               port: Number(process.env.REDIS_PORT) || 6379,
-            },
-          }),
-          ttl: 5 * 60 * 1000,
-        }),
+          },
+          password: process.env.REDIS_PASSWORD || undefined,
+          database: Number(process.env.REDIS_DB) || 1, // <- ini kuncinya, pisah dari BMJ
       }),
+    ttl: 5 * 60 * 1000,
+  }),
+}),
    UploadModule, BrandModule, CategoryModule, PrismaModule, AuthModule, ProductModule, SearchModule,
   ],
   controllers: [AppController],
