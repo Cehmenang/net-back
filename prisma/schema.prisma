@@ -1,0 +1,60 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Account {
+  id String @unique @default(uuid())
+  username String
+  email String @unique
+  password String
+  role Role @default(USER)
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Brand {
+  id String @unique @default(dbgenerated("concat('BRAND-', gen_random_uuid())"))
+  name String
+  description String
+  products Product[]
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Product {
+  id String @id @unique @default(dbgenerated("concat('PRODUCT-', gen_random_uuid())"))
+  name String
+  url String
+  images String[]
+  description String?
+  spesification String[] @default([])
+  feature String[] @default([])
+  stock Int?
+  pricelist Int?
+  offlineprice Int?
+  netprice Int?
+
+  brandId String
+  brand Brand @relation(fields: [brandId], references: [id])
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id String @unique @default(dbgenerated("concat('CATEGORY-', gen_random_uuid())"))
+  title String
+  description String
+  products Product[]
+}

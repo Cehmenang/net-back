@@ -1,0 +1,56 @@
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+    "username": "cehwhere",
+    "email": "cehwhere@gmail.com",
+    "password": "101010"
+}
+
+###
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+    "username": "cehwhere",
+    "password": "101010"
+}
+
+###
+POST http://localhost:8000/brand/create
+Content-Type: application/json
+
+{
+    "name": "Yamaha",
+    "description": "Semakin di depan"
+}
+
+###
+POST http://localhost:8000/category/create
+Content-Type: application/json
+
+{
+    "title": "Gitar Akustik",
+    "description": "Semakin di depan"
+}
+
+###
+GET http://localhost:8000/auth
+
+###
+GET http://localhost:8000/product
+
+###
+GET http://localhost:8000/brand
+
+###
+GET http://localhost:8000/category
+
+###
+DELETE http://localhost:8000/product/PRODUCT-67552f27-6ab9-4dbf-89a8-748a08775722
+
+###
+GET http://localhost:8000/auth/switch/role?id=05b18936-c46f-4dbc-9827-a217f6ef9519
+
+###
+DELETE http://localhost:8000/product/all
