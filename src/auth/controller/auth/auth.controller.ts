@@ -20,8 +20,18 @@ export class AuthController {
     }
     
     @Post("register")
-    async register(@Body() body: RegisterDto){
-        return await this.service.register(body)
+    async register(@Body() body: RegisterDto, @Res({ passthrough: true }) response){
+        const result = await this.service.register(body)
+
+        response.cookie('accessToken', result.token, {
+            httpOnly: true,
+            secure: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            domain: '.bandarmusikjakarta.com',
+            sameSite: 'none',
+        })
+
+        return { status: HttpStatus.ACCEPTED, message: 'Berhasil login', context: result.context }
     }
 
     @Post("login")

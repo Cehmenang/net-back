@@ -17,9 +17,9 @@ export class AuthService {
         try{
             body.password = await bcrypt.hash(body.password, 10)
             const user = await this.prisma.account.create({ data: body })
-
+            const token = await this.jwt.sign({ id: user.id, username: user.username, email: user.email, role: user.role })
             const context = this.getContext(user)
-            if(user) return { status: HttpStatus.ACCEPTED, context }
+            if(user) return { token, context }
         }catch(err){ return err }
     }
 
