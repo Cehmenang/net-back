@@ -19,6 +19,11 @@ export class BrandController {
         return this.service.getBrands()
     }
 
+    @Get(":name")
+    getBrand(@Param("name") name: string){
+        return this.service.getBrand(name)
+    }
+
     @Delete(":id")
     @UseGuards(JwtGuard)
     deleteBrand(@Param('id') id: string){

@@ -18,6 +18,11 @@ export class BrandService {
         return { status: HttpStatus.ACCEPTED, brands }
     }
 
+    async getBrand(name: string){
+        const brand = await this.prisma.brand.findFirst({ where: { name }, select: { name: true, description: true, image: true }})
+        return { status: HttpStatus.ACCEPTED, brand }
+    }
+
     async delete(id: string){
         const brand = await this.prisma.brand.findUnique({ where: { id }, select: { id: true, image: true } })
         if (!brand) throw new NotFoundException('Produk tidak ditemukan')
