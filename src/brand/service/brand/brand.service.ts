@@ -17,4 +17,8 @@ export class BrandService {
         const brands = await this.prisma.brand.findMany()
         return { status: HttpStatus.ACCEPTED, brands }
     }
+
+    async delete(id: string){
+        return await this.prisma.brand.delete({ where: { id } })
+    }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtGuard } from 'guard/jwt.guard';
 import { BrandService } from 'src/brand/service/brand/brand.service';
@@ -19,4 +19,11 @@ export class BrandController {
     getBrands(){
         return this.service.getBrands()
     }
+
+    @Delete(":id")
+    @UseGuards(JwtGuard)
+    deleteBrand(@Param('id') id: string){
+        return this.service.delete(id)
+    }
+
 }

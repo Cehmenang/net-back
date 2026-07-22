@@ -2,9 +2,9 @@ POST http://localhost:8000/auth/register
 Content-Type: application/json
 
 {
-    "username": "cehwhere",
-    "email": "cehwhere@gmail.com",
-    "password": "101010"
+    "username": "ceh",
+    "email": "ceh@gmail.com",
+    "password": "10"
 }
 
 ###
@@ -42,6 +42,9 @@ GET http://localhost:8000/product
 
 ###
 GET http://localhost:8000/brand
+
+###
+DELETE http://localhost:8000/brand/
 
 ###
 GET http://localhost:8000/category
