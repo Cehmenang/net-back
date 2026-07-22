@@ -15,7 +15,6 @@ export class BrandController {
     }
 
     @Get()
-    @UseGuards(JwtGuard)
     getBrands(){
         return this.service.getBrands()
     }
