@@ -1,4 +1,4 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UploadService } from 'src/upload/service/upload/upload.service';
 
@@ -19,6 +19,10 @@ export class BrandService {
     }
 
     async delete(id: string){
+        const brand = await this.prisma.brand.findUnique({ where: { id }, select: { id: true, image: true } })
+        if (!brand) throw new NotFoundException('Produk tidak ditemukan')
+        await this.upload.deleteFiles([brand.image])
+        // await this.invalidateProductsCache()
         return await this.prisma.brand.delete({ where: { id } })
     }
 }
