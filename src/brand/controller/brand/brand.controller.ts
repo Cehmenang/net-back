@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtGuard } from 'guard/jwt.guard';
 import { BrandService } from 'src/brand/service/brand/brand.service';
 
@@ -8,8 +9,9 @@ export class BrandController {
 
     @Post('create')
     @UseGuards(JwtGuard)
-    create(@Body() body){
-        return this.service.create(body)
+    @UseInterceptors(FileInterceptor('image'))
+    create(@Body() body, @UploadedFile() file: Express.Multer.File){
+        return this.service.create(body, file)
     }
 
     @Get()

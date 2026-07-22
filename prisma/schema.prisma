@@ -26,6 +26,7 @@ model Brand {
   id String @unique @default(dbgenerated("concat('BRAND-', gen_random_uuid())"))
   name String
   description String
+  image String
   products Product[]
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
