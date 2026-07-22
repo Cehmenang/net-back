@@ -40,10 +40,10 @@ export class AuthController {
 
         response.cookie('accessToken', result.token, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             maxAge: 24 * 60 * 60 * 1000,
-            // domain: '.bandarmusikjakarta.com',
-            sameSite: 'lax',
+            domain: '.bandarmusikjakarta.com',
+            sameSite: 'none',
         })
 
         return { status: HttpStatus.ACCEPTED, message: 'Berhasil login', context: result.context }
