@@ -33,7 +33,6 @@ export class AuthService {
     async login(body: LoginType){
         try{
             const user = await this.prisma.account.findFirst({ where: { username: body.username } })
-            console.log(user, 'HAI USERNYA!')
             if(!user) throw new UnauthorizedException()
             const passwordValidation = await bcrypt.compare(body.password, user.password)
             if(!passwordValidation) throw new Error("Password Tidak Sesuai!")
