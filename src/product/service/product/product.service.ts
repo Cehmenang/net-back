@@ -58,15 +58,23 @@ export class ProductService {
 
     async deleteAll(){ return await this.prisma.product.deleteMany() }
 
-    async getProducts(page: number, limit: number, orderBy: ProductOrderBy){
-        const cacheKey = `products:page=${page}:limit=${limit}`;
+    async getProducts(page: number, limit: number, orderBy: ProductOrderBy, brand?: string | null){
+        const cacheKey = `products:page=${page}:limit=${limit}:orderBy=${JSON.stringify(orderBy)}:brand=${brand ?? 'all'}`
  
         const cached = await this.cacheManager.get(cacheKey);
         if (cached) return cached
         
+        const where = brand
+            ? { brand: {
+                    name: brand,
+                },
+            }
+        : {}
+
         const skip = (page - 1) * limit
         const [data, total] = await this.prisma.$transaction([
             this.prisma.product.findMany({
+                where,
                 orderBy,
                 skip,
                 take: limit,

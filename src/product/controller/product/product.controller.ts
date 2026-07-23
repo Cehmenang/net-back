@@ -27,7 +27,7 @@ export class ProductController {
     deleteAll(){
         return this.service.deleteAll()
     }
-    
+
     @Delete(":id")
     @UseGuards(JwtGuard)
     delete(@Param('id') id: string){
@@ -35,8 +35,9 @@ export class ProductController {
     }
 
     @Get()
-    getProducts(@Query('page') page?: string, @Query('limit') limit?: string){
-        return this.service.getProducts(page ? parseInt(page): 1, limit ? parseInt(limit) : 16, { name: 'asc' })
+    getProducts(@Query('brand') brand?: string, @Query('page') page?: string, @Query('limit') limit?: string){
+        return this.service.getProducts(page ? parseInt(page): 1, limit ? parseInt(limit) : 16, { name: 'asc' },
+            brand ? brand : null)
     }
 
     @Get('admin')
