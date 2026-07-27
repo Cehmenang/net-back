@@ -27,6 +27,11 @@ export class CartService {
         if(cart) return { status: HttpStatus.ACCEPTED, message: "Berhasil Menambahkan Produk!" }
     }
 
+    async updateCart(id: string, quantity: number){
+        const update = await this.prisma.cart.update({ where: { id }, data: { quantity } })
+        if(update) return { status: HttpStatus.ACCEPTED, message: 'Berhasil Mengubah Keranjang!' }
+    }
+
     async deleteCart(id: string){
         const deleted = await this.prisma.cart.delete({ where: { id } })
         if(deleted) return { status: HttpStatus.ACCEPTED, message: 'Berhasil Menghapus Keranjang!' }
