@@ -20,8 +20,8 @@ export class CartController {
 
     @Patch("update/:id")
     @UseGuards(JwtGuard)
-    async updateCart(@Param("id") id: string, @Body() quantity: string){
-        return await this.service.updateCart(id, parseInt(quantity))
+    async updateCart(@Param("id") id: string, @Body() body: { quantity : string}){
+        return await this.service.updateCart(id, parseInt(body.quantity))
     }
 
     @Delete("delete/:id")
