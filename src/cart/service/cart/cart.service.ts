@@ -26,4 +26,9 @@ export class CartService {
         });
         if(cart) return { status: HttpStatus.ACCEPTED, message: "Berhasil Menambahkan Produk!" }
     }
+
+    async deleteCart(id: string){
+        const deleted = await this.prisma.cart.delete({ where: { id } })
+        if(deleted) return { status: HttpStatus.ACCEPTED, message: 'Berhasil Menghapus Keranjang!' }
+    }
 }

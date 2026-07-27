@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'guard/jwt.guard';
 import { CartService } from 'src/cart/service/cart/cart.service';
 
@@ -16,5 +16,11 @@ export class CartController {
     @UseGuards(JwtGuard)
     async addCart(@Req() req, @Body() body: { productId: string, quantity: string }){
         return await this.service.addCart(req.user.id, body.productId, parseInt(body.quantity!))
+    }
+
+    @Delete("delete/:id")
+    @UseGuards(JwtGuard)
+    async deleteCart(@Param("id") id: string, ){
+        return await this.service.deleteCart(id)
     }
 }
