@@ -9,7 +9,7 @@ export class CartController {
     @Get("me")
     @UseGuards(JwtGuard)
     async getCarts(@Req() req){
-        console.log(req)
+        console.log(req.user!, 'user')
         return await this.service.getCarts(req.user.id)
     }
 }
