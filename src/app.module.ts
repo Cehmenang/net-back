@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { SearchModule } from './search/search.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ 
@@ -30,7 +31,7 @@ import { SearchModule } from './search/search.module';
     ttl: 5 * 60 * 1000,
   }),
 }),
-   UploadModule, BrandModule, CategoryModule, PrismaModule, AuthModule, ProductModule, SearchModule,
+   UploadModule, BrandModule, CategoryModule, PrismaModule, AuthModule, ProductModule, SearchModule, CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
