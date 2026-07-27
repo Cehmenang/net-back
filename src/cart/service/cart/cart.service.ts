@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -8,5 +8,14 @@ export class CartService {
     async getCarts(id: string){
         const carts = await this.prisma.cart.findMany({ where: { accountId: id }, include: { product: true } })
         return { carts }
+    }
+
+    async addCart(id: string, productId: string, quantity: number){
+        const cart = await this.prisma.cart.create({ data: {
+            accountId: id,
+            productId,
+            quantity
+         }})
+        if(cart) return { status: HttpStatus.ACCEPTED, message: "Berhasil Menambahkan Produk!" }
     }
 }
