@@ -10,7 +10,7 @@ export class AuthService {
     constructor(private readonly prisma: PrismaService, private readonly jwt: JwtService){}
 
     getContext(user){
-        return { username: user.username, role: user.role }
+        return { id: user.id, username: user.username, role: user.role }
     }
 
     async register(body: RegisterType){
