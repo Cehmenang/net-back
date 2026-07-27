@@ -11,11 +11,19 @@ export class CartService {
     }
 
     async addCart(id: string, productId: string, quantity: number){
-        const cart = await this.prisma.cart.create({ data: {
-            accountId: id,
-            productId,
-            quantity
-         }})
+        const cart = await this.prisma.cart.upsert({
+            where: {
+                accountId_productId: { accountId: id, productId },
+            },
+            update: {
+                quantity: { increment: quantity },
+            },
+            create: {
+                accountId: id,
+                productId,
+                quantity,
+            },
+        });
         if(cart) return { status: HttpStatus.ACCEPTED, message: "Berhasil Menambahkan Produk!" }
     }
 }
